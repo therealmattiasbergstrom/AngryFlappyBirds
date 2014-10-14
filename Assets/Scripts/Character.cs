@@ -14,6 +14,9 @@ public class Character : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D collision) {
-		transform.parent.transform.position = Vector3.zero;
+
+		if (collision.collider.gameObject.tag == "DEADLY") {
+			transform.position = Vector3.zero;
+		}
 	}
 }
