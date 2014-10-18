@@ -4,6 +4,8 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour {
 	public float jumpForce;
 	public float speed;
+	public Rigidbody2D projectile;
+	public int numberOfProjectiles;
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +16,13 @@ public class PlayerControl : MonoBehaviour {
 	void Update () {
 		if (Input.GetButtonDown("Fire1")) {
 			this.rigidbody2D.AddForce(Vector2.up * jumpForce);
+		}
+		if (Input.GetButtonDown ("Jump")) {
+			if(numberOfProjectiles > 0) {
+				Rigidbody2D rb = (Rigidbody2D)Instantiate(projectile, transform.position + new Vector3(1, 0, 0), transform.rotation);
+				rb.AddForce(Vector2.right * 1000);
+				numberOfProjectiles--;
+			}
 		}
 	}
 
