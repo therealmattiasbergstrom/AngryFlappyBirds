@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class Character : MonoBehaviour {
-
+	public float defaultRotation = 78f;
+	private float _rotation;
 	// Use this for initialization
 	void Start () {
 	
@@ -10,6 +11,7 @@ public class Character : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		_rotation = transform.rotation.eulerAngles.z;
 	}
 
 	void OnCollisionEnter2D(Collision2D collision) {
