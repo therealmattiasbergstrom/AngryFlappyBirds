@@ -17,7 +17,6 @@ public class Character : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetButtonDown("Fire1")) {
-			Debug.Log ("asd");
 			_animator.SetTrigger("Fly");
 			this.rigidbody2D.AddForce(Vector2.up * jumpForce);
 		}
@@ -32,7 +31,7 @@ public class Character : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D collision) {
 
 		if (collision.collider.gameObject.tag == "DEADLY") {
-			transform.position = Vector3.zero;
+			Application.LoadLevel(0);
 		}
 	}
 }

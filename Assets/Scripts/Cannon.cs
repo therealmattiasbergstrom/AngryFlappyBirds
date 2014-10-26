@@ -6,7 +6,7 @@ public class Cannon : MonoBehaviour {
 	public int numberOfProjectiles;
 	public float shootRate = 1;
 
-	private float cooldown = 0;
+	private float _cooldown = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -15,15 +15,15 @@ public class Cannon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (cooldown > 0) {
-			cooldown -= Time.deltaTime;
+		if (_cooldown > 0) {
+			_cooldown -= Time.deltaTime;
 		}
 		else if (Input.GetButtonDown ("Jump")) {
 			if(numberOfProjectiles > 0) {
 				Rigidbody2D rb = (Rigidbody2D)Instantiate(projectile, transform.position + new Vector3(1, 0, 0), transform.rotation);
 				rb.AddForce(Vector2.right * 1000);
 				numberOfProjectiles--;
-				cooldown = shootRate;
+				_cooldown = shootRate;
 			}
 		}
 	}
