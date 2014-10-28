@@ -5,13 +5,28 @@ public class Character : MonoBehaviour {
 	public float defaultRotation = 78f;
 	public float jumpForce;
 	public float speed;
+	public UnityEngine.UI.Text scoreText;
 
 	private float _rotation;
 	private Animator _animator;
+	private int _score;
 
-	// Use this for initialization
+	private static Character instance;
+	public static Character Instance {
+		get {
+			return instance;
+		}
+	}
+
+	private void CreateInstance() {
+		instance = this;
+	}
+
 	void Awake () {
 		_animator = GetComponent<Animator> ();
+		if (instance == null) {
+			CreateInstance ();
+		}
 	}
 	
 	// Update is called once per frame
@@ -33,5 +48,10 @@ public class Character : MonoBehaviour {
 		if (collision.collider.gameObject.tag == "DEADLY") {
 			Application.LoadLevel(0);
 		}
+	}
+
+	public void IncreaseScore() {
+		_score++;
+		scoreText.text = _score.ToString();
 	}
 }
