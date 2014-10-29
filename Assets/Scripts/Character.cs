@@ -9,6 +9,7 @@ public class Character : MonoBehaviour {
 
 	private float _rotation;
 	private Animator _animator;
+	private ParticleSystem _particleSystem;
 	private int _score;
 
 	private static Character instance;
@@ -20,10 +21,11 @@ public class Character : MonoBehaviour {
 
 	private void CreateInstance() {
 		instance = this;
+		_particleSystem = GetComponent<ParticleSystem>();
+		_animator = GetComponent<Animator> ();
 	}
 
 	void Awake () {
-		_animator = GetComponent<Animator> ();
 		if (instance == null) {
 			CreateInstance ();
 		}
@@ -46,7 +48,7 @@ public class Character : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D collision) {
 
 		if (collision.collider.gameObject.tag == "DEADLY") {
-			Application.LoadLevel(0);
+			_animator.SetTrigger("Die");
 		}
 	}
 
@@ -54,4 +56,13 @@ public class Character : MonoBehaviour {
 		_score++;
 		scoreText.text = _score.ToString();
 	}
+
+	public void StartParticleSystem() {
+		_particleSystem.Play();
+	}
+
+	public void RestartLevel() {
+		Application.LoadLevel(0);
+	}
+
 }
