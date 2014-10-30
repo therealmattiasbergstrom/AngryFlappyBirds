@@ -14,7 +14,6 @@ public class ScoreTrigger : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D collider) {
-		Debug.Log ("Trigger");
 		if (collider.gameObject.tag == "Character") {
 			Character.Instance.IncreaseScore();
 		}

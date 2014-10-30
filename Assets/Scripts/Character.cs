@@ -4,13 +4,16 @@ using System.Collections;
 public class Character : MonoBehaviour {
 	public float defaultRotation = 78f;
 	public float jumpForce;
-	public float speed;
+	public float speed;	
+	public int maxLife;
 	public UnityEngine.UI.Text scoreText;
+	public UnityEngine.UI.Text lifeText;
 
 	private float _rotation;
 	private Animator _animator;
 	private ParticleSystem _particleSystem;
 	private int _score;
+	private int _life;
 
 	private static Character instance;
 	public static Character Instance {
@@ -26,6 +29,8 @@ public class Character : MonoBehaviour {
 	}
 
 	void Awake () {
+		_life = maxLife;
+		lifeText.text = ""+_life;
 		if (instance == null) {
 			CreateInstance ();
 		}
@@ -48,7 +53,13 @@ public class Character : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D collision) {
 
 		if (collision.collider.gameObject.tag == "DEADLY") {
-			_animator.SetTrigger("Die");
+			if (_life > 1) { 
+				_animator.SetTrigger("Damage");
+			}
+			else {
+				_animator.SetTrigger("Die");
+			}
+			RemoveLife ();
 		}
 	}
 
@@ -63,6 +74,30 @@ public class Character : MonoBehaviour {
 
 	public void RestartLevel() {
 		Application.LoadLevel(0);
+	}
+
+	public void AddLife() {
+		if (_life < maxLife) {
+			_life++;
+			UpdateLifeText();
+		}
+	}
+
+	public void RemoveLife() {
+		_life--;
+		UpdateLifeText();
+	}
+
+	public void AddToGhostLayer() {
+		transform.FindChild("Body").gameObject.layer = LayerMask.NameToLayer("Ghost");
+	}
+
+	public void AddToDefaultLayer() {
+		transform.FindChild("Body").gameObject.layer = LayerMask.NameToLayer("Default");
+	}
+
+	private void UpdateLifeText() {
+		lifeText.text = ""+_life;
 	}
 
 }
